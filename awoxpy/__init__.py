@@ -12,7 +12,8 @@ from bluepy import btle
 class awoxAroma:
     def __init__(self, mac):
         self.mac = mac
-
+        self.set_state(0, 0, 0, 0, 0, 0, False
+                       )
     def set_state(self, white, whiteBrightness, red, green, blue, colourBrightness, power):
         self.white = white
         self.whiteBrightness = whiteBrightness
