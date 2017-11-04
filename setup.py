@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'awoxpy',
   packages = ['awoxpy'], # this must be the same as the name above
-  version = '0.2',
+  version = '0.3',
   description = 'A library that help you control Awox Smartlight with BTLE protocol',
   author = 'Mika Benoit',
   author_email = 'mika.benoit@gmail.com',
