@@ -9,20 +9,6 @@ import time
 from bluepy import btle
 
 
-class Delegate(btle.DefaultDelegate):
-    def __init__(self, bulb):
-        self.bulb = bulb
-        btle.DefaultDelegate.__init__(self)
-
-    def handleNotification(self, cHandle, data):
-        print(data)
-        # if data[5] > 2:
-        #     power = True
-        # else:
-        #     power = False
-        # self.bulb.set_state(data[9], data[6], data[7], data[8], power)
-
-
 class awoxAroma:
     def __init__(self, mac):
         self.mac = mac
@@ -38,7 +24,6 @@ class awoxAroma:
 
     def connect(self):
         self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
-        self.device.setDelegate(Delegate(self))
 
         handles = self.device.getCharacteristics()
         for handle in handles:
@@ -99,6 +84,16 @@ class awoxAroma:
         self.white = white
         packet = bytearray([white])
         self.send_packet(self.whitehandle, packet)
+
+    def set_white_brightness(self, brightness):
+        self.whiteBrightness = brightness
+        packet = bytearray([brightness])
+        self.send_packet(self.whiteBrightnessHandle, packet)
+
+    def set_colour_brightness(self, brightness):
+        self.colourBrightness = brightness
+        packet = bytearray([brightness])
+        self.send_packet(self.rgbBrightnessHandle, packet)
 
     def get_state(self):
         readed = self.read(self.statehandle)
