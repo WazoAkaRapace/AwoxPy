@@ -100,6 +100,16 @@ class awoxAroma:
         packet = bytearray([white])
         self.send_packet(self.whitehandle, packet)
 
+    def set_white_brightness(self, brightness):
+        self.whiteBrightness = brightness
+        packet = bytearray([brightness])
+        self.send_packet(self.whiteBrightnessHandle, packet)
+
+    def set_colour_brightness(self, brightness):
+        self.colourBrightness = brightness
+        packet = bytearray([brightness])
+        self.send_packet(self.rgbBrightnessHandle, packet)
+
     def get_state(self):
         readed = self.read(self.statehandle)
         if readed == 0x00:
