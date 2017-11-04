@@ -32,7 +32,7 @@ class awoxAroma:
             if handle.uuid == "74532143-fff1-460d-8e8a-370f934d40be":
                 self.rgbhandle = handle
             if handle.uuid == "5b430c99-cb06-4c66-be2c-b538acfd1961":
-                self.whitehandle = handle
+                self.whitehandle = handle #From 0x00 to 0x7F
             if handle.uuid == "1c537b0a-4eaa-4e19-b98c-eaaa5bcd9bc9":
                 self.rgbBrightnessHandle = handle  # From 0x00 to 0x64
             if handle.uuid == "d8da934c-3d8f-4bdf-9230-f61295b69570":
