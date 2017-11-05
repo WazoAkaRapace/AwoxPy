@@ -86,7 +86,10 @@ class awoxAroma:
 
     def set_white(self, white):
         self.white = white
-        packet = bytearray([white])
+        if type(white) == bytes:
+            packet = [white]
+        else:
+            packet = bytearray([white])
         self.send_packet(self.whitehandle, packet)
 
     def set_white_brightness(self, brightness):
