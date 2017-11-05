@@ -24,24 +24,28 @@ class awoxAroma:
         self.power = power
 
     def connect(self):
-        self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
+        try:
+            self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
 
-        handles = self.device.getCharacteristics()
-        for handle in handles:
-            if handle.uuid == "217887f8-0af2-40029c05-24c9ecf71600":
-                self.statehandle = handle
-            if handle.uuid == "74532143-fff1-460d-8e8a-370f934d40be":
-                self.rgbhandle = handle
-            if handle.uuid == "5b430c99-cb06-4c66-be2c-b538acfd1961":
-                self.whitehandle = handle #From 0x00 to 0x7F
-            if handle.uuid == "1c537b0a-4eaa-4e19-b98c-eaaa5bcd9bc9":
-                self.rgbBrightnessHandle = handle  # From 0x00 to 0x64
-            if handle.uuid == "d8da934c-3d8f-4bdf-9230-f61295b69570":
-                self.whiteBrightnessHandle = handle  # From 0x00 to 0x73
-            if handle.uuid == "9e926da7-cffa-47f5-8d4b-7e82aff1a02a":
-                self.lightMode = handle  # 0x00 for White mode and 0x01 for color mode
+            handles = self.device.getCharacteristics()
+            for handle in handles:
+                if handle.uuid == "217887f8-0af2-40029c05-24c9ecf71600":
+                    self.statehandle = handle
+                if handle.uuid == "74532143-fff1-460d-8e8a-370f934d40be":
+                    self.rgbhandle = handle
+                if handle.uuid == "5b430c99-cb06-4c66-be2c-b538acfd1961":
+                    self.whitehandle = handle #From 0x00 to 0x7F
+                if handle.uuid == "1c537b0a-4eaa-4e19-b98c-eaaa5bcd9bc9":
+                    self.rgbBrightnessHandle = handle  # From 0x00 to 0x64
+                if handle.uuid == "d8da934c-3d8f-4bdf-9230-f61295b69570":
+                    self.whiteBrightnessHandle = handle  # From 0x00 to 0x73
+                if handle.uuid == "9e926da7-cffa-47f5-8d4b-7e82aff1a02a":
+                    self.lightMode = handle  # 0x00 for White mode and 0x01 for color mode
 
-        self.get_state()
+            self.get_state()
+            return True
+        except:
+            return False
 
     def send_packet(self, handle, data):
         initial = time.time()
@@ -81,7 +85,6 @@ class awoxAroma:
         self.send_packet(self.rgbhandle, packet)
 
     def set_white(self, white):
-
         self.white = white
         packet = bytearray([white])
         self.send_packet(self.whitehandle, packet)
