@@ -127,13 +127,15 @@ class awoxAroma:
         return self.power
 
     def get_colour(self):
-        return (self.red, self.green, self.blue)
+        return (int.from_bytes(self.red, byteorder='big'),
+                int.from_bytes(self.green, byteorder='big'),
+                int.from_bytes(self.blue, byteorder='big'))
 
     def get_colour_brightness(self):
-        return self.colourBrightness
+        return int.from_bytes(self.colourBrightness, byteorder='big')
 
     def get_white(self):
-        return self.white
+        return int.from_bytes(self.white, byteorder='big')
 
     def get_white_brightness(self):
-        return self.whiteBrightness
+        return int.from_bytes(self.whiteBrightness, byteorder='big')
