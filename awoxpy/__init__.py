@@ -12,8 +12,8 @@ from bluepy import btle
 class awoxAroma:
     def __init__(self, mac):
         self.mac = mac
-        self.set_state(0, 0, 0, 0, 0, 0, False
-                       )
+        self.set_state(0, 0, 0, 0, 0, 0, False)
+
     def set_state(self, white, whiteBrightness, red, green, blue, colourBrightness, power):
         self.white = white
         self.whiteBrightness = whiteBrightness
@@ -25,7 +25,11 @@ class awoxAroma:
 
     def connect(self):
         try:
-            self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
+            try:
+                self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
+            except:
+                btle.Scanner().scan(10)
+                self.device = btle.Peripheral(self.mac, addrType=btle.ADDR_TYPE_PUBLIC)
 
             handles = self.device.getCharacteristics()
             for handle in handles:
@@ -127,15 +131,21 @@ class awoxAroma:
         return self.power
 
     def get_colour(self):
-        return (int.from_bytes(self.red, byteorder='big'),
-                int.from_bytes(self.green, byteorder='big'),
-                int.from_bytes(self.blue, byteorder='big'))
+
+        return (int(self.red), int(self.green), int(self.blue))
 
     def get_colour_brightness(self):
-        return int.from_bytes(self.colourBrightness, byteorder='big')
+        if type(self.colourBrightness) == int:
+            return self.colourBrightness
+        else:
+            return ord(self.colourBrightness)
 
     def get_white(self):
-        return int.from_bytes(self.white, byteorder='big')
+            return self.white
 
     def get_white_brightness(self):
-        return int.from_bytes(self.whiteBrightness, byteorder='big')
+        if type(self.whiteBrightness) == int:
+            return self.whiteBrightness
+        else:
+            return ord(self.whiteBrightness)
+
